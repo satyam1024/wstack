@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Under Construction!
 
-## Getting Started
+# W-Stack
 
-First, run the development server:
+## Core Technologies
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework:** Next.js
+- **UI:** ShadCN + TailwindCSS
+- **Database:** MongoDB (with Drizzle ORM)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Additional Essential Choices
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Query Management**  
+   - *TanStack Query (React Query)* – Best for API data fetching, caching, and synchronization.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **State Management**  
+   - *Zustand* – Simple, scalable, and lightweight. (Lightweight global state)
 
-## Learn More
+3. **Caching**  
+   - **Client-Side:** TanStack Query – Caching for API requests. (Automatic query caching)  
+   - **Server-Side:** Redis – For backend caching (Rate limiting + session storage).
 
-To learn more about Next.js, take a look at the following resources:
+4. **Performance Optimizations**  
+   - **Lodash debounce:** API middleware using `lodash.throttle`  
+   - **React-use:** Custom `useDebounce` hook. (UI Interactions)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **API Management**  
+   - *Hono.dev* – Lightweight, fast, works well with Edge and Serverless environments.  
+   - **Validation:** Zod  
+   - **Documentation:** Swagger UI auto-generation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. **Authentication & Authorization**  
+   - *BetterAuth* – Better Auth Alternate (`npm add better-auth`)  
+   - *Helmet.js* – Adds security headers.
 
-## Deploy on Vercel
+7. **File Uploads & Storage**  
+   - **AWS S3**  
+   - *UploadThing* – Easy file uploads for Next.js  
+   - *Sharp.js* – For image processing and optimization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+8. **CI/CD Pipelines**  
+   - **GitHub Actions** – Automate testing, linting, and deployment  
+   - **Docker** – For containerization (if needed)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+9. **Logging & Monitoring**  
+   - *Pino* / *Winston* – Fast logging for backend  
+   - *Sentry* – Error tracking for both frontend and backend  
+   - *Logtail* – Cloud-based logging
+
+10. **Documentation & Developer Experience**  
+    - *just-the-docs* – For project structure documentation  
+    - *Swagger* (for Hono) – API documentation  
+    - *ESLint + Prettier + Husky* – Code linting and formatting
+
+11. **Testing Setup**  
+    - *Jest + React Testing Library* – For unit and integration tests  
+    - *Cypress / Playwright* – For end-to-end testing
+
+
+# Documentation for Starter Kit Strcuture
+being done parallely at [wstack-docs](https://github.com/MambaCodes/wstack-docs)
