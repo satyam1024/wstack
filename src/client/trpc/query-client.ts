@@ -18,3 +18,16 @@ export function makeQueryClient() {
     },
   })
 }
+
+
+// This query client is used to create a new query client for external queries and non-TRPC queries.
+export function makeExternalQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+}
