@@ -4,13 +4,13 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider = "mongodb" // Use environment variable for provider
+  url      = env("DATABASE_URL")      // Use environment variable for connection string
   relationMode = "prisma"
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id") // Use String instead of @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -20,8 +20,8 @@ model User {
 }
 
 model Account {
-  id                String  @id @default(cuid()) @map("_id") // Use String instead of @db.ObjectId
-  userId            String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -38,9 +38,9 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid()) @map("_id") // Use String instead of @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id])
 }
