@@ -1,14 +1,29 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/server/auth'
+import NextAuth from 'next-auth';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import {prisma} from './db';
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
 
-export async function getUserSession() {
-  const session = await auth()
-  return session
-}
+export const authOptions = {
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    }),
+  ],
+  callbacks: {
+    async session({ session, user }: { session: any, user: any }) {
+      session.user.id = user.id;
+      return session;
+    },
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: true, 
+};
 
-export async function checkUserSession() {
-  const session = await getUserSession()
-  if (!session) {
-    redirect('/signin')
-  }
-}
+export const { handlers, auth } = NextAuth(authOptions);
