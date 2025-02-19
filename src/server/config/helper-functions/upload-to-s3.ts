@@ -1,4 +1,4 @@
-import { s3 } from "../config/s3-config";
+import { s3 } from "../s3-config";
 import { processImage } from "./process-image";
 
 interface CustomFile extends File {

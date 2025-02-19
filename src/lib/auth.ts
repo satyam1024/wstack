@@ -2,6 +2,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { ObjectId } from 'mongodb';
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import GithubProvider from 'next-auth/providers/github';
 import { prisma } from './db';
 
 // Create a standard Prisma adapter first
@@ -25,6 +26,10 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID ?? '', 
+      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
     }),
   ],
   session: {
