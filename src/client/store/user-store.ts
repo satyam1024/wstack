@@ -8,7 +8,7 @@ type UserState = {
 }
 
 export const useUserStore = create<UserState>()(
-// This is the `persist` middleware that stores the user in LocalStorage
+  // This is the `persist` middleware that stores the user in LocalStorage
   persist(
     (set) => ({
       user: null,
@@ -17,6 +17,6 @@ export const useUserStore = create<UserState>()(
     }),
     {
       name: 'user-store', // LocalStorage key
-    }
-  )
+    },
+  ),
 )

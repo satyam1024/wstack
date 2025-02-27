@@ -14,7 +14,7 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string().min(1),
     AWS_REGION: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
-    DATABASE_PROVIDER: z.string().min(1)
+    DATABASE_PROVIDER: z.string().min(1),
   },
   client: {},
   runtimeEnv: {
@@ -29,6 +29,6 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_REGION: process.env.AWS_REGION,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    DATABASE_PROVIDER: process.env.DATABASE_PROVIDER
+    DATABASE_PROVIDER: process.env.DATABASE_PROVIDER,
   },
 })
