@@ -4,6 +4,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import GithubProvider from 'next-auth/providers/github'
 import { prisma } from './db'
+import { AdapterUser } from 'next-auth/adapters' // Import AdapterUser type
 
 // Create a standard Prisma adapter first
 const prismaAdapter = PrismaAdapter(prisma)
@@ -12,20 +13,29 @@ const prismaAdapter = PrismaAdapter(prisma)
 export const authOptions: NextAuthOptions = {
   adapter: {
     ...prismaAdapter,
+    // @ts-ignore
     createUser: async (data: {
       id: string
-      name?: string | null
-      email?: string
-      image?: string | null
+      name: string | null
+      email?: string | null // Change to string | null
+      image: string | null
       emailVerified?: Date | null
-    }) => {
+    }): Promise<AdapterUser> => {
+      // Ensure the return type is AdapterUser
       const id = new ObjectId().toHexString()
-      return prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           ...data,
           id,
         },
       })
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        image: user.image,
+        emailVerified: user.emailVerified,
+      } as AdapterUser // Cast to AdapterUser
     },
   },
   providers: [
@@ -44,7 +54,10 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, token }) {
       if (session.user && token.sub) {
-        session.user.id = token.sub
+        session.user = {
+          ...session.user,
+          id: token.sub,
+        } as any
       }
       return session
     },

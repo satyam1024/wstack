@@ -8,6 +8,7 @@ app.get('/hello', (c) => {
 })
 
 app.get('/protected', authMiddleware, (c) => {
+  // @ts-ignore
   const user: any = c.get('user')
 
   return c.json({ message: 'Protected API Data', name: user.name })
