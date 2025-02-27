@@ -23,7 +23,12 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <p>Welcome, {session?.user?.name}</p>
       <button
-        onClick={() => signOut({ redirectTo: 'http://localhost:3000/login' })}
+        onClick={() =>
+          signOut({
+            redirect: true,
+            callbackUrl: 'http://localhost:3000/login',
+          })
+        }
       >
         logout
       </button>
