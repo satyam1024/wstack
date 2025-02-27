@@ -1,26 +1,14 @@
 "use client";
-
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
-
+import { redirect } from 'next/navigation'
 export default function Login() {
+ 
   const { data: session, status } = useSession();
 
   if (status === 'authenticated') {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-800 via-purple-900 to-black animate-pulse"> 
-        <h1 className="text-2xl font-bold mb-4 text-white">Welcome, {session.user?.name}!</h1>
-        <div className='flex flex-col gap-y-3'>
-          <p className="text-lg text-gray-300">You are now logged in.</p>
-          <button
-            onClick={() => signOut()}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Sign Out
-          </button>
-        </div>
-      </div>
-    );
+    
+    redirect('/home')
   }
 
   return (

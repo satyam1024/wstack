@@ -45,6 +45,8 @@ model User {
   sessions      Session[]
 }
 
+
+
 model VerificationToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
@@ -52,4 +54,11 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Todo {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    title String?
+    isCompleted Boolean @default(false)
+    createdAt DateTime @default(now())
 }

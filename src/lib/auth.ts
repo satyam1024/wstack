@@ -4,11 +4,10 @@ import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { prisma } from './db';
+import { getServerSession } from "next-auth";
 
-// Create a standard Prisma adapter first
 const prismaAdapter = PrismaAdapter(prisma);
 
-// Then extend it with your custom functionality
 export const authOptions: NextAuthOptions = {
   adapter: {
     ...prismaAdapter,
@@ -52,3 +51,5 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
 };
+
+export const auth = () => getServerSession(authOptions);

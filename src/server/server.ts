@@ -4,7 +4,7 @@ import { rateLimiterMiddleware } from './middlewares/redis-middleware';
 
 const app = new Hono();
 
-app.use(rateLimiterMiddleware);
+// app.use(rateLimiterMiddleware);
 app.route('/api', api);
 
 export default app;
