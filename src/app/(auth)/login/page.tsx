@@ -1,26 +1,28 @@
 'use client'
 
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { redirect } from 'next/dist/server/api-utils'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Login() {
   const { data: session, status } = useSession()
 
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/dashboard') 
+    }
+  }, [status, router])
+
   if (status === 'authenticated') {
     return (
-      <div className="flex min-h-screen animate-pulse flex-col items-center justify-center bg-gradient-to-br from-purple-800 via-purple-900 to-black">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-800 via-purple-900 to-black">
         <h1 className="mb-4 text-2xl font-bold text-white">
-          Welcome, {session.user?.name}!
+          Redirecting to dashboard...
         </h1>
-        <div className="flex flex-col gap-y-3">
-          <p className="text-lg text-gray-300">You are now logged in.</p>
-          <button
-            onClick={() => signOut()}
-            className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700"
-          >
-            Sign Out
-          </button>
-        </div>
       </div>
     )
   }
