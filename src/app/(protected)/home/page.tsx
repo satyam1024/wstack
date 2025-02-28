@@ -7,25 +7,14 @@ import { signOut } from "next-auth/react";
 import AddTodo from "@/components/task/addTask";
 import {TaskProps} from "@/types/index";
 import TaskCard from "@/components/task/taskCard";
+import { useTasks } from "@/hooks/useTasks";
 
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [tasks, setTasks] = useState<TaskProps[]>([]);
-  const [reload,setReload]=useState(0);
-  const handleReload = useCallback(() => {
-    setReload(prev => prev + 1);
-  }, []);
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const res = await fetch("/api/task");
-      const data = await res.json();
-      setTasks(data);
-    };
-    fetchTodos();
-  }, [reload]);
+  const { tasks, isLoading }  = useTasks();
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -57,11 +46,11 @@ export default function Dashboard() {
   
         
         <div className="flex flex-col justify-center items-center">
-            <AddTodo change={handleReload}/>
+            <AddTodo />
             <div className=" w-[50vw] flex flex-col items-center justify-center  ">
-              {tasks.map((task,id)=>(
+              {tasks?.map((task,id)=>(
                 <div className="justify-between p-10 "key={id}>
-                  <TaskCard change={handleReload} todo={task}/>
+                  <TaskCard todo={task}/>
                 </div>
               ))}
             </div>

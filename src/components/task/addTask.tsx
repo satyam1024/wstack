@@ -1,10 +1,11 @@
 "use client"
+import { useTasks } from '@/hooks/useTasks';
 import React ,{useState} from 'react'
 
-const AddTodo = ({change }:{change:()=>void }) => {
+const AddTodo = () => {
 
   const [input, setInput] = useState("");
-
+  const { addTaskMutation } = useTasks();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -13,24 +14,14 @@ const AddTodo = ({change }:{change:()=>void }) => {
       return;
     }
 
-    try {
-      const res = await fetch("/api/task", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: input }),
-      });
-
-      if (res.ok) {
+    addTaskMutation.mutate(input, {
+      onSuccess: () => {
         setInput(""); 
-        change();
-      } else {
-        const data = await res.json();
-        console.log(data.error, "Something went wrong.");
-      }
-    } catch (error) {
-      console.error("Failed to add todo:", error);
-      
-    }
+      },
+      onError: (error) => {
+        console.error("Failed to add todo:", error);
+      },
+    });
   };
 
 
